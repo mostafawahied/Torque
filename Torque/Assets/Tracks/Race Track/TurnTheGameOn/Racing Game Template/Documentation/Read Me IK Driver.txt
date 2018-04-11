@@ -1,0 +1,10 @@
+IK Driver 1.0
+Contact: turnthegameon@gmail.com
+
+Thank you for your purchase. this asset comes with 2 demo scenes, one for standard configuration and another for mobile. To enable mobile controls set you build settings to android/ios the from the Unity toolbar select "Mobile Input/ Enable". You can disable it from the same menu selection.
+
+The Car controller is ready to be used as a prefab and loaded on scene start, the camera rig will detach and initialize on startup as well as connect the scenes UI to the car controller. This controller works much like the standard assets car controller but has some additional features to help bring it more to life. All car controller settings can be configured on the "IK Driver" Prefab inspector by adjusting the public variables.
+
+The "Car" Child contains all the car objects and can be modified to use any type of car model. Just replace your model with the default mesh and assign your new wheel meshes in the car controller inspector. This object also contains the "IK Driver Avatar", you can use the inspector to customize some settings as well as reference how the script is configured if you want to try to reconfigure it to use with your other car physics systems.
+
+When changing the car model you will likely need to reposition the avatar, you can do this in play mode and make a note of the appropriate avatar position and enter that into the "IK Driver Avatar" inspector once you exit play mode. The driver position is set in the Start call. You can also reposition any of the other IK objects on the controller to match your models by just moving them around. If you need a hand, have a question or would like me to add more IK targets and trigger settings let me know.

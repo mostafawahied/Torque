@@ -1,0 +1,158 @@
+Racing Game Kit
+v1.054
+	
+Please provide feedback as I want to make this project as good as possible. If you have any questions feel free to contact me at turnthegameon@gmail.com .
+
+The Unity Networking Multiplayer Services are currently in development by Unity and are being prepared for public release. When Unity determines that the service and components are sufficient they will be considered stable and not expected to change much. There are still some bugs and missing features from the new Unity Networking library, as these features are added I will also add them to this framework to make it more stable as well.
+
+UNet features that are close to being ready but still not quite working right:
+-Network Host Migration
+-Hiding matches that have been started from the lobby
+
+To enable multiplayer services for your project select Window/Services, then select multiplayer and click the link to go to dashboard. This will take you to a Unity web page to configure your multiplayer services for your project.
+
+This racing system features adjustable race oppononent sizes and laps. The cars used in this system are based on the Unity 5 Standard Assets vehicle. This system is easy to modify, just adjust the car prefabs referenced in the scene managers, change the textures for UI components and add your own race tracks. Making new races involves duplicating your customized race scene and setting up a new way-point path for the new track. I plan on supporting this assets as well as adding more features to this kit and expanding the racing system.
+
+You can follow the video tutorials at the links below, new video tutorials will be added soon:
+-Garage Scene:          https://youtu.be/BW6J9dC-Pew
+-Race Scene:            https://youtu.be/GqJUKn5rpBE
+-Replacing Car Models:  https://youtu.be/gyx5G1OiJlI
+-IK Driver:             https://youtu.be/4_ruOs-xWF0
+-To enable Mobile controls, change your build settings to a mobile platform and select Mobile Input/Enable from the Unity Toolbar.
+
+
+	Preconfigured scenes have been added for you to update and customize to create your own racing game. Follow the video overview which provides insight into how the managers work for the included scenes. To customize the player cars simply replace the related components on the vehicle prefabs, this also applies for opponent cars. The garage manager must also be updated to reference the new material for each car model. The wheel coliders and car control scripts will also need to be adjusted to match your new car model needs.
+
+For support, comments or any other questions you may contact me anytime at turnthegameon@gmail.com and I’ll get back to you as soon as possible.
+Thank you for your support.
+
+
+Projet detais:
+
+/////////////1. Build Settings
+///
+3 scenes are included that should be included in the build settings for the game to work properly. 
+
+The Garage Scene should be scene 0 unless you want to make a splash screen or main menu scene that is loaded before scene 0.
+
+The Open World Scene and Race 1 Scenes are referenced and loaded from the Garage Scene.
+
+When adding more races to your build settings ensure each race starts with a number prefix indicating the race number. Example:
+0Race 0 Name
+1Race 1 Name
+2Race 2 Name
+.
+.
+10Race 10 Name
+
+
+/////////////2. Garage Scene (Primary Menu System)
+///
+The garage scene is where you can make most of your changes to customize the game as most references originate in this scene. This is where the player can buy new cars, change the color and glow light of purchased cars, access the race selection menu and configure game settings like mute and graphics quality.
+
+
+The Garage Manager controls and contains the references for most of the game's settings and is split into 3 categories Races, Cars and Info. Select the category you want to view or modify, they all contain different variables and controls listed below.
+
+\\Races-
+- Configure Race Size: Enable this option to adjust the number of races in the template.
+
+- < and > Buttons: Navagite through the settings for each race.
+
+- Race Name: Sets the race name that will be displayed and loaded from the build settings when the race is selected by the player. Follow the prefix requirements outlined in the build settings section when naming your scene files.
+
+- Race Locked: This is a basic lock system that will be extended in a future update, if you want to extend it and are an experienced with Unity scripting reference the code in the menu and set PlayerPrefs to controls it.
+
+-Unlock Amount:	The amount required to unlock the race if "Purchase Level Unlock" is turned on.
+
+- First, Second and Third Prize: Currency is reward to the player if the player finishes a race in 1st, 2nd or 3rd place.
+
+-Race Image: A reference to an UI Image object in the scene, each race should have it’s own reference, SetActive(true) is called on this object when the race is selected from the menu system. When adding more races reference the configuration and duplicate an image to create a new race image, then change the texture and assign that new object to the inspector.
+
+-Lap Limit: Sets the lap limit for the race system.
+
+-Purchase Level Unlock: Turn On/Off the ability to allow the player to unlock races with currency.
+
+-Auto Unlock Next Race: Turn On/Off the ability to auto unlock the next race when a race is completed.
+
+-Lock Button Text: Button text used when a race is locked.
+
+\\Cars
+- Configure Car Size: Enable this option to adjust the number of player cars in the template.
+
+- < and > Buttons: Navagite through the settings for each car.
+
+- Vehicle Name: Sets the name for the car to be displayed in the garage menu.
+
+- Vehicle Price: Sets the car purchase price.
+
+- Car Unlocked: When the player buys a car it becomes unlocked, you can set the car to unlocked by default to let the player have access to the car for free. This data is saved using PlayerPrefs.
+
+- Vehicle Prefab: A reference to the vehicle prefab assigned to this vehicle slot.
+
+- Car Material: A reference to this cars prefab material.
+
+- Car Glow Light: A reference to this cars prefab glow light (particle system).
+
+- Scene Car Glow Light: A reference to the preview car glow light particle that is used in the garage scene.
+
+- Scene car Model: A reference to the car model that is used in the garage scene. SetActive(true) is called on this object when the player selects the car from the vehicle select menu.
+
+- Starting Currency: Sets the starting currency for the player.
+
+- Paint Price: Sets the price to change paint color for the player.
+
+- Glow Price: Sets the price to change glow light color for the player.
+
+\\Info
+Garage Audio: Add reference to audio files to the garage scene.
+
+UI: A reference to all UI objects and UI Windows used in the garage scene.
+
+Delete PlayerPrefs Data: Press this button to delete all saved PlayerPrefs data from your editor session.
+
+\\Settings Manager:        Used with the settings menu to call the settings methods.
+
+
+
+/////////////3. Race Scene
+///
+Data is loaded into this scene from the garage scene through scriptable objects and plarprefs settings.
+
+\\Waypoints - Waypoints are used by the players arrow waypointer, AI vehicles, and position system. Waypoints must be configured throughout the track to ensure proper position tracking and AI movement.
+
+- Configure Mode: This is a lock that only allows waypoints to be automatically adjusted based on current settings when turned on. The waypoint system is very powerful but easy to misuse if not properly understood. Always save your scene before adjusting this setting as it will delete objects and manager references. When you need to reduce the total waypoint size you should turn off configure mode, adjust total waypoints value, then turn on configure mode to have the inspector auto update and assign new values to the waypoints, then click the cleanup old waypoints button to remove and organize any points not accounted for from your scene.
+
+- Total Waypoints: Automatically adds/removes/adjust waypoints in the scene to be used for position tracking, Ai and the player arrow waypointer.
+
+\\Settings
+- Ready Time: Set the amount of timer will count down before the race begins.
+
+- Spawn Points: A reference to each vehicles spawn point. Tip you can move these to any position/rotation in the scene you want.
+
+\\Info
+- Manager Reference: A reference to all prefabs and components used by the race scene.
+
+
+/////////////4. Open World Scene
+This is a simple open world scene that loads the players currently selected vehicle to test drive.
+
+
+/////////////5. Changing the Game
+This template is designed to be a racing game framework, much of the work has already been completed and it’s up to you to change the car models, adjust the car physics and add new races.
+
+
+/////////////6. CARS
+To add new car models you need to replace the models in the car prefabs with your own, this really as easy as just replacing the models, adjusting the colliders on the prefab, including the wheel colliders to make sure everything is scaled properly. While you’re at it you can adjust each vehicles inspector settings to tweak the performance of the cars. This cars use the Unity 5 Standard Assets vehicle controller, many variables are exposed in the inspector, spend some time playing with the settings and tweak your cars to perfection.
+
+
+/////////////7. RACES
+To add new races to the kit you must create the new tracks, adjust the Garage Manager, configure the new race scenes and add the scenes to your build settings. 
+
+
+First, in the Garage menu, you must adjust the Race Settings to match the setup you would like for your game, set all of the race details in the inspector.
+
+
+Second, open the included race scene and save it as a new scene following the naming convention described in the build settings section of this documentation. Then replace your track with the included track.
+
+
+Third, adjust your waypoints and starting points in the scene. Use the Race Manager to set the amount of waypoints you require for your track and position them along your course, test drive your course to ensure waypoint placements are as optimal as they can be. Follow the advice outlined in the documentation above or use the video tutorial for a visual overview of this process.
