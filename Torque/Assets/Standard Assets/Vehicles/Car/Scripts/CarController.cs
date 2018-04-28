@@ -46,14 +46,24 @@ namespace UnityStandardAssets.Vehicles.Car
         private float m_CurrentTorque;
         private Rigidbody m_Rigidbody;
         private const float k_ReversingThreshold = 0.01f;
-
-        public bool Skidding { get; private set; }
-        public float BrakeInput { get; private set; }
+  
+        public bool Skidding { get;  set; }
+        public float BrakeInput { get; set; }
         public float CurrentSteerAngle{ get { return m_SteerAngle; }}
         public float CurrentSpeed{ get { return m_Rigidbody.velocity.magnitude*2.23693629f; }}
         public float MaxSpeed{get { return m_Topspeed; }}
-        public float Revs { get; private set; }
-        public float AccelInput { get; private set; }
+        public float Revs { get;  set; }
+        public float AccelInput { get;  set; }
+
+
+        //nitro
+        public Boolean useNitro = false;
+        public ParticleEmitter leftNitro; 
+        public ParticleEmitter rightNitro;
+        private int nitroValue;
+        //nitro end
+
+
 
         // Use this for initialization
         private void Start()
@@ -69,8 +79,13 @@ namespace UnityStandardAssets.Vehicles.Car
 
             m_Rigidbody = GetComponent<Rigidbody>();
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl*m_FullTorqueOverAllWheels);
-        }
 
+            nitroValue = 1000;
+        }
+        /*public void Update()
+        {
+            Nitro();
+        }*/
 
         private void GearChanging()
         {
@@ -138,9 +153,10 @@ namespace UnityStandardAssets.Vehicles.Car
             }
 
             //clamp input values
-            steering = Mathf.Clamp(steering, -1, 1);
-            AccelInput = accel = Mathf.Clamp(accel, 0, 1);
-            BrakeInput = footbrake = -1*Mathf.Clamp(footbrake, -1, 0);
+            //*******
+            steering = Mathf.Clamp(steering, -10f, 10f);
+            AccelInput = accel = Mathf.Clamp(accel, 0f, 1f);
+            BrakeInput = footbrake = -1*Mathf.Clamp(footbrake, -1f, 0f);
             handbrake = Mathf.Clamp(handbrake, 0, 1);
 
             //Set the steer on the front wheels.
@@ -362,6 +378,41 @@ namespace UnityStandardAssets.Vehicles.Car
                 }
             }
             return false;
+        }
+
+        public void Nitro()
+        {
+            if (Input.GetButton("Fire2"))
+            {
+                useNitro = true;
+            }
+            else
+            {
+                useNitro = false;
+            }
+
+            if (useNitro && CurrentSpeed > 5 && nitroValue > 0)
+            {
+               // m_CurrentTorque = 70;
+                leftNitro.emit = true;
+                rightNitro.emit = true;
+                nitroValue--;
+            }
+            else
+            {
+                //m_CurrentTorque = 50;
+                leftNitro.emit = false;
+                rightNitro.emit = false;
+            }
+
+            if (nitroValue < 100 && !Input.GetButton("Fire2") && CurrentSpeed > 20)
+            {
+                nitroValue++;
+            }
+            else if (nitroValue > 100)
+            {
+                nitroValue = 100;
+            }
         }
     }
 }

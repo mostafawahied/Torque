@@ -16,18 +16,18 @@ public class PlayerCollision : MonoBehaviour
         
         // We check if the object we collided with has a tag called "WaterBasicDaytime".
         if (collisionInfo.gameObject.CompareTag("Water"))
-        {
-           
+        {           
+
             rb.isKinematic = true;
             //FindObjectOfType<GameManager>().EndGame();
         }
         
         // We check if the object we collided with has a tag called "rocks".
-        if (collisionInfo.gameObject.CompareTag("rocks"))
+        /*if (collisionInfo.gameObject.CompareTag("rocks"))
         {
             rb.isKinematic = true;// Disable the car movement.
             //FindObjectOfType<GameManager>().EndGame();
-        }
+        }*/
         
     }
 

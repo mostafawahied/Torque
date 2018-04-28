@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class LapTimeManager : MonoBehaviour
-{
-
+public class LapTimeManager : MonoBehaviour {
     public static int MinuteCount;
     public static int SecondCount;
     public static float MilliCount;
@@ -52,5 +52,3 @@ public class LapTimeManager : MonoBehaviour
 
     }
 }
-
-
